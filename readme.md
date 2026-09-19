@@ -1,157 +1,110 @@
-# Raganork-MD
+# Abhisek MD
 
-<p align="center">
-  <a href="https://rgnk.site">
-    <img src="https://i.ibb.co/QL4BQQ6/Untitled-1.png" alt="Get Session" width="300"/>
-  </a>
-</p>
+A lightweight, plugin-based WhatsApp automation framework customized and maintained by **Abhisek Praharaj**.
 
-A lightweight WhatsApp bot framework with multi-session support and extensive configuration options. Complete rewrite of the original Raganork project for better stability and performance.
-
-## Get Started
-
-#### 1. Get Your Session String
-
-<p align="center">
-  <a href="https://rgnk.site">
-    <img src="https://i.ibb.co/fVWcycPc/get-session.png" alt="Get Session" width="200"/>
-  </a>
-</p>
-
-**Important for Cloud Deployments:** If you're deploying on platforms like Render, Koyeb, Railway, or similar cloud services, you'll need a `DATABASE_URL` (PostgreSQL) for persistent storage. VPS deployments can use local file storage.
-
-#### 2. Deploy and setup your bot
-
-<p align="center">
-  <a href="https://rgnk.site">
-    <img src="https://i.ibb.co/fVsfPsjk/deploy-bot.png" alt="Get Session" width="200"/>
-  </a>
-</p>
+> **Notice:** This project uses an unofficial WhatsApp Web client. Use only for personal, consent-based automation. Account restrictions or bans are possible, and you must follow WhatsApp's terms and applicable law.
 
 ## Features
 
-- Lightweight and fast performance
-- Single and multi-session capabilities
-- Extensive plugin system
-- Group management tools
-- Media download functionality
-- Excellent caching and session management
+- Plugin-based command architecture
+- Single and multi-session configuration
+- Group administration utilities
+- Media and format conversion tools
+- AFK, filters, scheduled actions, and message statistics
+- PDF and social-media utilities (depending on plugin/API availability)
+- Runtime configuration through environment variables
+- SQLite for local deployments and PostgreSQL support for cloud deployments
+- PM2-based process management
+
+**Command availability depends on the installed plugins, external APIs, permissions, and WhatsApp protocol compatibility. Use `.list` to inspect commands exposed by the running bot and `.info <command>` for command details.**
 
 ## Prerequisites
 
-- Node.js (version 20 or higher)
+- Node.js 20+
 - Git
-- FFmpeg
-- Yarn package manager
-- PM2 (for process management)
-- Database URL (postgreSQL - for cloud deployments)
+- FFmpeg (required by several media features)
+- Yarn
+- PM2 (recommended)
+- PostgreSQL `DATABASE_URL` for cloud deployments; local SQLite is used when it is omitted
 
 ## Installation
 
-### Clone Repository
-
 ```bash
 npm install -g yarn pm2
-git clone https://github.com/souravkl11/raganork-md.git
+git clone https://github.com/praharaj03/raganork-md.git
 cd raganork-md
-```
-
-### Install Dependencies
-
-```bash
 yarn install
 ```
 
-### Configuration
+## Configuration
 
-Create a `.env` file in the root directory:
+Create a `.env` file in the project root. Start from `.env.example`:
 
-#### Session Configuration
-
-Single session:
-
-```
-SESSION=RGNK~d7a5s66
-```
-
-Multi-session:
-
-```
-SESSION=RGNK~d7a5s66,RGNK~7ad8cW
-```
-
-#### Required Variables
-
-```
-# Bot Configuration
-BOT_NAME=Your Bot Name
+```env
+SESSION=RGNK~YOUR_SESSION_VALUE
+BOT_NAME=Abhisek MD
 HANDLERS=.,!
 SUDO=919876543210
-
-# Database (Required for cloud platforms)
-DATABASE_URL=your_database_url
-
-# Localization
 LANGUAGE=en
 TZ=Asia/Kolkata
+# DATABASE_URL=postgresql://user:password@host:5432/database
 ```
 
-## Running the Bot
+Never commit `.env`, session strings, API keys, database credentials, or authentication-state files. A session string can provide access to the linked WhatsApp account.
+
+## Run
 
 ```bash
 npm start
 ```
 
-## Process Management
+Useful PM2 commands:
 
 ```bash
-# Stop bot
-pm2 stop raganork-md
-
-# Restart bot
-pm2 restart raganork-md
+pm2 status
+pm2 logs abhisek-md
+pm2 restart abhisek-md
+pm2 stop abhisek-md
 ```
 
-## Commands
+## Built-in discovery commands
 
-Default prefix: `.`
+The command registry provides:
 
-- `.list` – Show available commands
-- `.ping` – Check response time
-- `.restart` – Restart bot (sudo only)
-- `.shutdown` – Stop bot (sudo only)
+- `.list` — display available commands grouped by category
+- `.info <command>` — show a command's description, usage, and restrictions
+- `.alive` — check whether the bot is running
+- `.setalive` — configure the alive message (owner-only)
 
-## File Structure
+Other commands are supplied by individual plugins and may require administrator, owner, API, or media permissions.
 
+## Project structure
+
+```text
+abhisek-md/
+├── plugins/     # Feature plugins
+├── core/        # Bot, database, session, and message handling
+├── config.js    # Runtime configuration
+├── index.js     # Entry point
+├── main.js      # Application bootstrap
+└── package.json # Dependencies and scripts
 ```
-raganork-md/
-├── plugins/     # Bot plugins
-├── core/        # Core libraries
-├── output/      # Operational outputs
-├── temp/        # Temporary files
-├── config.js    # Configuration handler
-├── index.js     # Main entry point
-└── package.json # Dependencies
-```
 
-## Support
+## Responsible use and security
 
-- [Telegram Group](https://t.me/raganork_in)
-- [Official Website](https://raganork.live)
-
-## Legal Notice
-
-⚠️ **Use at your own risk.** This bot uses unofficial WhatsApp Web API methods and may result in temporary or permanent account bans.
-
-- This code is in no way affiliated, authorized, maintained, sponsored or endorsed by WhatsApp or any of its affiliates.
-- WhatsApp is a trademark of WhatsApp Inc., registered in the U.S. and other countries.
-- This software is provided for educational and research purposes only
-- Powered by [Baileys](https://github.com/WhiskeySockets/Baileys)
+- Do not send spam, unsolicited bulk messages, or harassment.
+- Do not expose pairing codes, session strings, logs, or authentication files.
+- Restrict owner/admin commands carefully.
+- Review third-party APIs before enabling a plugin.
+- Pin and regularly review dependencies; keep Baileys and related packages updated.
+- Prefer Meta's official WhatsApp Cloud API for production or commercial messaging.
 
 ## License
 
-GPL License - See LICENSE file for details.
+GPL-3.0. See [LICENSE](LICENSE).
 
----
+## Credits
 
-**Note:** Some files are obfuscated for security reasons and should not be modified.
+Original framework: [souravkl11/raganork-md](https://github.com/souravkl11/raganork-md)
+
+WhatsApp connectivity: [Baileys](https://github.com/WhiskeySockets/Baileys)

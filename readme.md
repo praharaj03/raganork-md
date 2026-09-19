@@ -31,8 +31,8 @@ A lightweight, plugin-based WhatsApp automation framework customized and maintai
 
 ```bash
 npm install -g yarn pm2
-git clone https://github.com/praharaj03/raganork-md.git
-cd raganork-md
+git clone https://github.com/praharaj03/abhisek-md.git
+cd abhisek-md
 yarn install
 ```
 
